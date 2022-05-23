@@ -47,6 +47,11 @@ function filterByQuery(query, animalsArray) {
     // return the filtered results:
     return filteredResults;
   }
+//function for find by id
+  function findById(id, animalsArray) {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    return result;
+  }
 
 //adding the route for front end data - res is for response 
 app.get('/api/animals', (req, res) => {
@@ -56,6 +61,16 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results);
   });
+
+  //second route adding in the id filter
+  app.get('/api/animals/:id', (req, res) => {
+  const result = findById(req.params.id, animals);
+  if (result) {
+    res.json(result);
+  } else {
+    res.send(404);
+  }
+});
 
 //make the server listen
 app.listen(PORT, () => {
